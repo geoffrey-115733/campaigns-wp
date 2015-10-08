@@ -161,7 +161,7 @@ function ninja_forms_tab_form_list(){
 		</thead>
 		<tbody>
 	<?php
-	if(is_array($all_forms) AND !empty($all_forms) AND $current_page <= $page_count){
+		if(is_array($all_forms) AND !empty($all_forms) AND $current_page <= $page_count){
 		for ($i = $start; $i < $end; $i++) {
 			$form_id = $all_forms[$i];
 			$data = Ninja_Forms()->form( $form_id )->get_all_settings();
@@ -174,20 +174,35 @@ function ninja_forms_tab_form_list(){
 			$duplicate_link = esc_url( add_query_arg( array( 'duplicate_form' => 1, 'form_id' => $form_id ), $link ) );
 			$shortcode = apply_filters ( "ninja_forms_form_list_shortcode", "[ninja_forms id=" .  $form_id . "]", $form_id );
 			$template_function = apply_filters ( "ninja_forms_form_list_template_function", "<pre>if( function_exists( 'ninja_forms_display_form' ) ){ ninja_forms_display_form( " . "$form_id" . " ); }</pre>", $form_id );
-			?>
+	?>
 			<tr id="ninja_forms_form_<?php echo $form_id;?>_tr">
 				<th scope="row" class="check-column">
 					<input type="checkbox" id="" name="form_ids[]" value="<?php echo $form_id;?>" class="ninja-forms-bulk-action">
 				</th>
 				<td class="post-title page-title column-title">
 					<strong>
-						<a href="<?php echo $edit_link;?>"><?php echo stripslashes( $data['form_title'] );?></a>
+						
+						<!-- If user == admin -->
+						<?php if (current_user_can('manage_options')) { ?>
+							<a href="<?php echo $edit_link;?>"><?php echo stripslashes( $data['form_title'] );?></a>
+
+						<!-- If user == editor -->
+						<?php } elseif (current_user_can('unfiltered_html')) { ?>
+							<a href="<?php echo $subs_link;?>"><?php echo stripslashes( $data['form_title'] );?></a>
+						
+						<?php } else { 
+							echo stripslashes( $data['form_title'] ); 
+						} ?>
+
+						
 					</strong>
 					<div class="row-actions">
-						<span class="edit"><a href="<?php echo $edit_link;?>"><?php _e( 'Edit', 'ninja-forms' ); ?></a> | </span>
-						<span class="trash"><a class="ninja-forms-delete-form" title="<?php _e( 'Delete this form', 'ninja-forms' ); ?>" href="#" id="ninja_forms_delete_form_<?php echo $form_id;?>"><?php _e( 'Delete', 'ninja-forms' ); ?></a> | </span>
-						<span class="duplicate"><a href="<?php echo $duplicate_link;?>" title="<?php _e( 'Duplicate Form', 'ninja-forms' ); ?>"><?php _e( 'Duplicate', 'ninja-forms' ); ?></a> | </span>
-						<span class="bleep"><?php echo ninja_forms_preview_link( $form_id ); ?> | </span>
+						<?php if(current_user_can( 'manage_options' )) { ?>
+							<span class="edit"><a href="<?php echo $edit_link;?>"><?php _e( 'Edit', 'ninja-forms' ); ?></a> | </span>
+							<span class="trash"><a class="ninja-forms-delete-form" title="<?php _e( 'Delete this form', 'ninja-forms' ); ?>" href="#" id="ninja_forms_delete_form_<?php echo $form_id;?>"><?php _e( 'Delete', 'ninja-forms' ); ?></a> | </span>
+							<span class="duplicate"><a href="<?php echo $duplicate_link;?>" title="<?php _e( 'Duplicate Form', 'ninja-forms' ); ?>"><?php _e( 'Duplicate', 'ninja-forms' ); ?></a> | </span>
+							<span class="bleep"><?php echo ninja_forms_preview_link( $form_id ); ?> | </span>
+						<?php } ?>
 						<span class="subs"><a href="<?php echo $subs_link;?>" class="" title="<?php _e( 'View Submissions', 'ninja-forms' ); ?>"><?php _e( 'View Submissions', 'ninja-forms' ); ?></a></span>
 					</div>
 				</td>
