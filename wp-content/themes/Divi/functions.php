@@ -8035,3 +8035,11 @@ if ( class_exists( 'WooCommerce' ) ) {
 		woocommerce_related_products( $woocommerce_args );
 	}
 }
+
+
+function nf_subs_capabilities( $cap ) {
+    return 'unfiltered_html';
+}
+add_filter( 'ninja_forms_admin_submissions_capabilities', 'nf_subs_capabilities' );
+add_filter( 'ninja_forms_admin_parent_menu_capabilities', 'nf_subs_capabilities' );
+add_filter( 'ninja_forms_admin_menu_capabilities', 'nf_subs_capabilities' );
