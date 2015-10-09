@@ -155,7 +155,6 @@ function ninja_forms_tab_form_list(){
 				<th class="check-column"><input type="checkbox" id="" class="ninja-forms-select-all" title="ninja-forms-bulk-action"></th>
 				<th><?php _e( 'Form Title', 'ninja-forms' );?></th>
 				<th><?php _e( 'Shortcode', 'ninja-forms' );?></th>
-				<th><?php _e( 'Template Function', 'ninja-forms' );?></th>
 				<th><?php _e( 'Date Updated', 'ninja-forms' );?></th>
 			</tr>
 		</thead>
@@ -210,9 +209,6 @@ function ninja_forms_tab_form_list(){
 					<?php echo $shortcode; ?>
 				</td>
 				<td>
-					<?php echo $template_function; ?>
-				</td>
-				<td>
 					<?php echo $date_updated;?>
 				</td>
 			</tr>
@@ -225,15 +221,6 @@ function ninja_forms_tab_form_list(){
 	}	//End $all_forms if statement
 	?>
 		</tbody>
-		<tfoot>
-			<tr>
-				<th class="check-column"><input type="checkbox" id="" class="ninja-forms-select-all" title="ninja-forms-bulk-action"></th>
-				<th><?php _e( 'Form Title', 'ninja-forms' );?></th>
-				<th><?php _e( 'Shortcode', 'ninja-forms' );?></th>
-				<th><?php _e( 'Template Function', 'ninja-forms' );?></th>
-				<th><?php _e( 'Date Updated', 'ninja-forms' );?></th>
-			</tr>
-		</tfoot>
 	</table>
 	<?php
 }
