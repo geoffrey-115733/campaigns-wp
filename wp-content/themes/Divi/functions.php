@@ -8036,7 +8036,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 	}
 }
 
-
 function nf_subs_capabilities( $cap ) {
     return 'unfiltered_html';
 }
